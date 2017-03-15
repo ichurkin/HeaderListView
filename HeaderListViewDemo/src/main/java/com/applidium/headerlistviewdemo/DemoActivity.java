@@ -61,35 +61,23 @@ public class DemoActivity extends Activity {
 
             @Override
             public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
-
                 if (convertView == null) {
-                    if (getSectionHeaderItemViewType(section) == 0) {
-                        convertView = (TextView) getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_1), null);
-                    } else {
-                        convertView = getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_2), null);
-                    }
+                    convertView = getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_1), null);
                 }
-
-                if (getSectionHeaderItemViewType(section) == 0) {
-                    ((TextView) convertView).setText("Header for section " + section);
-                } else {
-                    ((TextView) convertView.findViewById(android.R.id.text1)).setText("Header for section " + section);
-                    ((TextView) convertView.findViewById(android.R.id.text2)).setText("Has a detail text field");
-                }
-
+                ((TextView) convertView).setText("Header for section " + section);
                 switch (section) {
-                case 0:
-                    convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
-                    break;
-                case 1:
-                    convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
-                    break;
-                case 2:
-                    convertView.setBackgroundColor(getResources().getColor(R.color.holo_green_light));
-                    break;
-                case 3:
-                    convertView.setBackgroundColor(getResources().getColor(R.color.holo_blue_light));
-                    break;
+                    case 0:
+                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
+                        break;
+                    case 1:
+                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
+                        break;
+                    case 2:
+                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_green_light));
+                        break;
+                    case 3:
+                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_blue_light));
+                        break;
                 }
                 return convertView;
             }
