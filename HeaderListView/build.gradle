@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19+'
+    compile 'com.android.support:appcompat-v7:25+'
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }
 
@@ -28,7 +28,7 @@ publishing {
 }
 
 group 'com.applidium'
-version '1.0'
+version '1.0.3'
 ext.androidVersionCode = 1
 
 android {
