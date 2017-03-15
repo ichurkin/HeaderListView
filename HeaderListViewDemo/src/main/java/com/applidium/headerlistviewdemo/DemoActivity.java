@@ -1,10 +1,15 @@
 package com.applidium.headerlistviewdemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,10 +18,23 @@ import com.applidium.headerlistview.SectionAdapter;
 
 public class DemoActivity extends Activity {
 
+    public static final String TAG = "Demo";
+    private int currentItemSection;
+    private int currentItemRow;
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HeaderListView list = new HeaderListView(this);
+        handler = new Handler();
+
+
+        final HeaderListView list = new HeaderListView(new android.view.ContextThemeWrapper(this, R.style.MyListViewStyle));
+        list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        //initial test values
+        currentItemSection = 0;
+        currentItemRow = 3;
 
         list.setAdapter(new SectionAdapter() {
 
@@ -43,9 +61,19 @@ public class DemoActivity extends Activity {
             @Override
             public View getRowView(int section, int row, View convertView, ViewGroup parent) {
                 if (convertView == null) {
-                    convertView = (TextView) getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_1), null);
+                    convertView = getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_1), null);
+//                    ((TextView) convertView).setTextColor(ContextCompat.getColor(DemoActivity.this, R.color.item_text));
+//                    convertView.setBackgroundResource(R.drawable.item_bg);
+//                    Drawable buttonDrawable = getResources().getDrawable(R.drawable.item_bg);
+//                    buttonDrawable.mutate();
+//                    convertView.setBackgroundDrawable(buttonDrawable);
+
                 }
                 ((TextView) convertView).setText("Section " + section + " Row " + row);
+                if (section == currentItemSection && row == currentItemRow) {
+                    Log.d(TAG, String.format("Checked row %d under section %d", row, section));
+                    list.setItemChecked(section, row, true);
+                }
                 return convertView;
             }
 
@@ -65,18 +93,19 @@ public class DemoActivity extends Activity {
                     convertView = getLayoutInflater().inflate(getResources().getLayout(android.R.layout.simple_list_item_1), null);
                 }
                 ((TextView) convertView).setText("Header for section " + section);
+                Context context = DemoActivity.this;
                 switch (section) {
                     case 0:
-                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
+                        convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
                         break;
                     case 1:
-                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
+                        convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_orange_light));
                         break;
                     case 2:
-                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_green_light));
+                        convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_green_light));
                         break;
                     case 3:
-                        convertView.setBackgroundColor(getResources().getColor(R.color.holo_blue_light));
+                        convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_blue_light));
                         break;
                 }
                 return convertView;
@@ -85,7 +114,18 @@ public class DemoActivity extends Activity {
             @Override
             public void onRowItemClick(AdapterView<?> parent, View view, int section, int row, long id) {
                 super.onRowItemClick(parent, view, section, row, id);
+                currentItemSection = section;
+                currentItemRow = row;
+                list.setItemChecked(section, row, true);
                 Toast.makeText(DemoActivity.this, "Section " + section + " Row " + row, Toast.LENGTH_SHORT).show();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(DemoActivity.this, "Checked item position is " + list.getListView().getCheckedItemPosition(), Toast.LENGTH_LONG).show();
+                    }
+                }, 5000);
+
             }
         });
         setContentView(list);

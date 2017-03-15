@@ -20,14 +20,14 @@ public class HeaderListView extends RelativeLayout {
     // TODO: Handle listViews with fast scroll
     // TODO: See if there are methods to dispatch to mListView
 
-    private static final int FADE_DELAY    = 1000;
+    private static final int FADE_DELAY = 1000;
     private static final int FADE_DURATION = 2000;
 
     private InternalListView mListView;
-    private SectionAdapter   mAdapter;
-    private RelativeLayout   mHeader;
-    private View             mHeaderConvertView;
-    private FrameLayout      mScrollView;
+    private SectionAdapter mAdapter;
+    private RelativeLayout mHeader;
+    private View mHeaderConvertView;
+    private FrameLayout mScrollView;
     private AbsListView.OnScrollListener mExternalOnScrollListener;
 
     public HeaderListView(Context context) {
@@ -93,19 +93,19 @@ public class HeaderListView extends RelativeLayout {
 
     private class HeaderListViewOnScrollListener implements AbsListView.OnScrollListener {
 
-        private int            previousFirstVisibleItem = -1;
-        private int            direction                = 0;
-        private int            actualSection            = 0;
-        private boolean        scrollingStart           = false;
-        private boolean        doneMeasuring            = false;
-        private int            lastResetSection         = -1;
-        private int            nextH;
-        private int            prevH;
-        private View           previous;
-        private View           next;
-        private AlphaAnimation fadeOut                  = new AlphaAnimation(1f, 0f);
-        private boolean        noHeaderUpToHeader       = false;
-        private boolean        didScroll = false;
+        private int previousFirstVisibleItem = -1;
+        private int direction = 0;
+        private int actualSection = 0;
+        private boolean scrollingStart = false;
+        private boolean doneMeasuring = false;
+        private int lastResetSection = -1;
+        private int nextH;
+        private int prevH;
+        private View previous;
+        private View next;
+        private AlphaAnimation fadeOut = new AlphaAnimation(1f, 0f);
+        private boolean noHeaderUpToHeader = false;
+        private boolean didScroll = false;
 
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -153,13 +153,13 @@ public class HeaderListView extends RelativeLayout {
 
                 boolean needScrolling = currIsFirst && !currHasHeader && prevHasHeader && realFirstVisibleItem != firstVisibleItem;
                 boolean needNoHeaderUpToHeader = currIsLast && currHasHeader && !nextHasHeader && realFirstVisibleItem == firstVisibleItem && Math.abs(mListView.getChildAt(0).getTop()) >= mListView.getChildAt(0).getHeight() / 2;
-                
+
                 noHeaderUpToHeader = false;
                 if (currIsHeader && !prevHasHeader && firstVisibleItem >= 0) {
                     resetHeader(direction < 0 ? actualSection - 1 : actualSection);
                 } else if ((currIsHeader && firstVisibleItem > 0) || needScrolling) {
                     if (!prevHasRows) {
-                        resetHeader(actualSection-1);
+                        resetHeader(actualSection - 1);
                     }
                     startScrolling();
                 } else if (needNoHeaderUpToHeader) {
@@ -293,9 +293,19 @@ public class HeaderListView extends RelativeLayout {
     public ListView getListView() {
         return mListView;
     }
-    
+
     public void addHeaderView(View v) {
         mListView.addHeaderView(v);
+    }
+
+
+    public void setChoiceMode(int choiceMode) {
+        mListView.setChoiceMode(choiceMode);
+    }
+
+    public void setItemChecked(int section, int row, boolean value) {
+        int position = mAdapter.getAbsoluteRowPosition(section, row);
+        mListView.setItemChecked(position, value);
     }
 
     private float dpToPx(float dp) {

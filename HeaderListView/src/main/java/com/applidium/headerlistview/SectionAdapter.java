@@ -143,6 +143,13 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
     }
 
     /**
+     * Returns absolute the row index in ListView
+     */
+    protected int getAbsoluteRowPosition(int section, int row) {
+        return numberOfCellsBeforeSection(section) + (hasSectionHeaderView(section) ? 1 : 0) + row;
+    }
+
+    /**
      * Returns true if the cell at this index is a section header
      */
     protected boolean isSectionHeader(int position) {
