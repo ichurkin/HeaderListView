@@ -1,8 +1,28 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
-        <!-- Customize your theme here. -->
+    <!-- inherit from the material theme -->
+    <style name="AppTheme" parent="android:Theme.Material">
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+
+        <item name="android:listViewStyle">@style/MyListViewStyle</item>
+    </style>
+
+    <!--<style name="activated" parent="android:Theme.Holo">-->
+        <!--<item name="android:background">@android:color/holo_green_light</item>-->
+    <!--</style>-->
+
+    <style name="MyListViewStyle" parent="android:style/Widget.ListView">
+        <item name="android:background">@drawable/item_bg</item>
+        <!--<item name="android:divider">@color/light_gray</item>-->
+        <item name="android:dividerHeight">1dp</item>
+        <!--<item name="android:listSelector">@drawable/actionbar_background_green</item>-->
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:cacheColorHint">#00000000</item>
     </style>
 
 </resources>
