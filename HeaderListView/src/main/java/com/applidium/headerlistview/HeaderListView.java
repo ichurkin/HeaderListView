@@ -2,6 +2,7 @@ package com.applidium.headerlistview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -65,7 +66,7 @@ public class HeaderListView extends RelativeLayout {
         addView(mHeader);
 
         // The list view's scroll bar can be hidden by the header, so we display our own scroll bar instead
-        Drawable scrollBarDrawable = getResources().getDrawable(R.drawable.scrollbar_handle_holo_light);
+        Drawable scrollBarDrawable = ContextCompat.getDrawable(getContext(), R.drawable.scrollbar_handle_holo_light);
         mScrollView = new FrameLayout(getContext());
         LayoutParams scrollParams = new LayoutParams(scrollBarDrawable.getIntrinsicWidth(), LayoutParams.MATCH_PARENT);
         scrollParams.addRule(ALIGN_PARENT_RIGHT);
